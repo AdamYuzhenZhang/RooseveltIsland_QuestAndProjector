@@ -1,28 +1,28 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class VideoController : MonoBehaviour
 {
     public MQTTReceiver _eventSender;
-    public string tagOfTheMQTTReceiver = "GameController";
+    //public string tagOfTheMQTTReceiver = "GameController";
     public VideoPlayer videoPlayer;
     public GameObject playerCamera;
 
-    private int[] starts = new int[8]{0, 49, 64, 135, 153, 162, 210, 330};
-    private int[] ends = new int[8]{47, 62, 132, 144, 160, 210, 330, 356};
-    private int[] durations = new int[8];
+    public int[] starts = new int[]{0, 49, 64, 135, 153, 162};
+    public int[] ends = new int[]{47, 62, 132, 144, 160, 356};
+    private int[] durations;
     
+    //public int[] starts = new int[]{0, 49, 64, 135, 153, 162, 210, 330};
+    //public int[] ends = new int[]{47, 62, 132, 144, 160, 210, 330, 356};
     //private int[] starts = new int[13]{0, 49, 64, 135, 153, 162, 210, 330, 368, 400, 510, 562, 572};
     //private int[] ends = new int[13]{47, 62, 132, 144, 160, 210, 330, 356, 400, 510, 558, 569, 593};
     //private int[] durations = new int[13];
 
     private int currentVideoPt = 0;
     
-    private int[] rotations = new int[8]{130, 220, -50, 40, 220, -50, -50, -50};
+    private int[] rotations = new int[]{130, 220, -50, 40, 220, -50};
     //private int[] rotations = new int[13]{130, 220, -50, 40, 220, -50, -50, -50, 130, 130, 130, 40, 130};
 
     private float targetRatio;
@@ -38,13 +38,14 @@ public class VideoController : MonoBehaviour
     {
         _eventSender=this.gameObject.GetComponent<MQTTReceiver>();
         _eventSender.OnMessageArrived += OnMessageArrivedHandler;
-
+        durations = new int[starts.Length];
         for (int i = 0; i < durations.Length; i++)
         {
             durations[i] = ends[i] - starts[i];
         }
-
-        videoPlayer.playbackSpeed = 0.1f;
+        
+        videoPlayer.time = starts[0];
+        videoPlayer.playbackSpeed = 0f;
     }
 
     private void Update()
@@ -57,8 +58,6 @@ public class VideoController : MonoBehaviour
         
         //Debug.Log(currentRatio(currentVideoPt));
     }
-    
-    
     
 
     private void OnMessageArrivedHandler(string newMsg)
@@ -89,10 +88,17 @@ public class VideoController : MonoBehaviour
             goToPoint(currentVideoPt);
         }
         targetRatio = distanceRatio;
-        float deltaRatio = float.Parse(messages[2]);
-        float deltaTime = float.Parse(messages[3]);
+        float num3 = float.Parse(messages[2]);
+        float num4 = float.Parse(messages[3]);
 
         float currentVideoRatio = currentRatio(currentPt);
+
+        if (num3 == -10 && num4 == -10)
+        {
+            // restart app
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            
+        }
         // set speed
         videoPlayer.playbackSpeed = targetSpeed(currentPt, distanceRatio, currentVideoRatio);
         text_speed.text = videoPlayer.playbackSpeed.ToString();
