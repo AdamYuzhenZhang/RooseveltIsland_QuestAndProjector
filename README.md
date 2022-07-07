@@ -17,3 +17,5 @@ It's called QuestScene, in Assets/Scenes folder.
    Start[i] and End[i] is the ith section in the whole 360 video.
 
    The values are time in seconds of the point in the whole video.
+
+   The 6 sections are the following respectively: Tata to south park; south park; south park to corner at tram stop; short section from tram corner to tram bus stop, bus stop to corner, that corner to Octagon. 
