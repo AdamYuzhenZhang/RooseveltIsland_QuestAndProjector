@@ -18,7 +18,8 @@
 /[Rr]ecordings/
 
 # 360 recordings
-/[Aa]ssets/360Videos
+/[Aa]ssets/360Videos/*.mp4
+/[Aa]ssets/360Videos/*.mp4.meta
 
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # /[Aa]ssets/AssetStoreTools*
