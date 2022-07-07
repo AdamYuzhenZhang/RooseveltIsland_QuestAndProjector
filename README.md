@@ -11,4 +11,9 @@ It's called QuestScene, in Assets/Scenes folder.
 2. Drag it to the Video Clip in VideoPlayer gameObject in QuestScene
 3. In QuestScene, go to MQTT===ChangeHere gameObject, find Video Controller script attached to it
 4. Update the starts and ends based on the new video:
-   The 
+
+   There should be 6 elements for both. 
+
+   Start[i] and End[i] is the ith section in the whole 360 video.
+
+   The values are time in seconds of the point in the whole video.
