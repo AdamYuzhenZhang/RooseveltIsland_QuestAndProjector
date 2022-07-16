@@ -13,6 +13,7 @@ public class VideoController : MonoBehaviour
     public int[] starts = new int[]{0, 49, 64, 135, 153, 162};
     public int[] ends = new int[]{47, 62, 132, 144, 160, 356};
     private int[] durations;
+    public float[] endingPortion = new float[]{0.96f, 0.95f, 0.98f, 0.92f, 0.92f, 0.995f};
     
     //public int[] starts = new int[]{0, 49, 64, 135, 153, 162, 210, 330};
     //public int[] ends = new int[]{47, 62, 132, 144, 160, 210, 330, 356};
@@ -31,11 +32,13 @@ public class VideoController : MonoBehaviour
     public Text text_speed;
     public Text text_ratio;
 
-    public ScreenBlocker screenBlocker;
+    public HeadBlocker headBlocker;
+    public GameObject startScene;
     
     // Start is called before the first frame update
     void Start()
     {
+        endingPortion = new float[]{0.95f, 0.93f, 0.97f, 0.9f, 0.9f, 0.995f};
         _eventSender=this.gameObject.GetComponent<MQTTReceiver>();
         _eventSender.OnMessageArrived += OnMessageArrivedHandler;
         durations = new int[starts.Length];
@@ -64,6 +67,7 @@ public class VideoController : MonoBehaviour
     {
         Debug.Log("Message Arrived");
         string[] messages = newMsg.Split();
+
         Debug.Log(newMsg);
         text_message.text = newMsg;
         ParseAndPlay(messages);
@@ -72,18 +76,17 @@ public class VideoController : MonoBehaviour
     private void ParseAndPlay(string[] messages)
     {
         int currentPt = int.Parse(messages[0]);
-        // update pt if necessary
-        //if (currentPt != currentVideoPt)
-        //{
-        //    goToPoint(currentPt);
-        //}
+
+        Debug.Log(currentPt);
+        Debug.Log(endingPortion);
+        Debug.Log(endingPortion[currentPt]);
 
         float distanceRatio = float.Parse(messages[1]);
-        if (distanceRatio > 0.95)
+        if (distanceRatio > endingPortion[currentPt])
         {
-            screenBlocker.BlockTheView();
+            headBlocker.BlockTheView();
         }
-        if (currentPt != currentVideoPt)
+        if (currentPt != currentVideoPt && currentVideoPt <= 5)
         {
             goToPoint(currentVideoPt);
         }
@@ -99,6 +102,22 @@ public class VideoController : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             
         }
+        if (num3 == -50 && num4 == -50)
+        {
+            // Start video
+            startScene.SetActive(false);
+            headBlocker.StopBlocking();
+        }
+
+        if (num3 == -5 && num4 == -5)
+        {
+            // Firefighter start
+        }
+        if (num3 == -6 && num4 == -6)
+        {
+            // Firefighter end
+        }
+
         // set speed
         videoPlayer.playbackSpeed = targetSpeed(currentPt, distanceRatio, currentVideoRatio);
         text_speed.text = videoPlayer.playbackSpeed.ToString();
@@ -108,6 +127,7 @@ public class VideoController : MonoBehaviour
 
     private void goToPoint(int targetPt)
     {
+        headBlocker.BlockTheView();
         // change video section
         videoPlayer.time = starts[targetPt+1];
         currentVideoPt = targetPt+1;
