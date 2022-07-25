@@ -51,7 +51,7 @@ public class VideoController : MonoBehaviour
         videoPlayer.playbackSpeed = 0f;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         // stop when needed
         if (targetRatio <= currentRatio(currentVideoPt))
