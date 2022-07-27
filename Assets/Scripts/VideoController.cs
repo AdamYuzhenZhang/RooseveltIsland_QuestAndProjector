@@ -106,7 +106,7 @@ public class VideoController : MonoBehaviour
         {
             // Start video
             startScene.SetActive(false);
-            headBlocker.StopBlocking();
+            headBlocker.BlockTheView();
         }
 
         if (num3 == -5 && num4 == -5)
@@ -116,6 +116,16 @@ public class VideoController : MonoBehaviour
         if (num3 == -6 && num4 == -6)
         {
             // Firefighter end
+        }
+        if (num3 == -7 && num4 == -7)
+        {
+            // block the view 
+            headBlocker.ManuallyBlocked();
+        }
+        if (num3 == -8 && num4 == -8)
+        {
+            // unblock the view
+            headBlocker.StopBlocking();
         }
 
         // set speed

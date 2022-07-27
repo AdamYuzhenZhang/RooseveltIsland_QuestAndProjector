@@ -167,6 +167,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.YuzhenZhang.RI_QuestPlayer
+    Standalone: com.YuzhenZhang.RIQuestPlayer
   buildNumber:
     Standalone: 0
     iPhone: 0
@@ -599,9 +600,7 @@ PlayerSettings:
   switchPlayerConnectionEnabled: 1
   switchUseNewStyleFilepaths: 0
   switchUseMicroSleepForYield: 1
-  switchEnableRamDiskSupport: 0
   switchMicroSleepForYieldTime: 25
-  switchRamDiskSpaceSize: 12
   ps4NPAgeRating: 12
   ps4NPTitleSecret: 
   ps4NPTrophyPackPath: 
@@ -698,6 +697,7 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
+    1: SSL
     7: SSL
   additionalCompilerArguments: {}
   platformArchitecture: {}
