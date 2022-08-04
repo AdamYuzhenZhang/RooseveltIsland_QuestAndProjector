@@ -16,7 +16,7 @@ public class VideoController : MonoBehaviour
     public int[] starts = new int[]{0, 49, 64, 135, 153, 162};
     public int[] ends = new int[]{47, 62, 132, 144, 160, 356};
     private int[] durations;
-    public float[] endingPortion = new float[]{0.96f, 0.95f, 0.98f, 0.92f, 0.92f, 0.995f};
+    public float[] endingPortion = new float[]{0.96f, 0.95f, 0.98f, 0.92f, 0.92f, 0.999f};
     
     //public int[] starts = new int[]{0, 49, 64, 135, 153, 162, 210, 330};
     //public int[] ends = new int[]{47, 62, 132, 144, 160, 210, 330, 356};
@@ -39,6 +39,8 @@ public class VideoController : MonoBehaviour
     public GameObject startScene;
     public GameObject VideoPlayerObject;
     private long currentFrame;
+
+    private Quaternion rotationBeforeFirefighter;
     
     // Start is called before the first frame update
     void Start()
@@ -53,18 +55,17 @@ public class VideoController : MonoBehaviour
         }
         
         videoPlayer.time = starts[0];
+        playerCamera.transform.rotation = Quaternion.Euler(0, rotations[0], 0);
         videoPlayer.playbackSpeed = 0f;
     }
 
     private void Update()
     {
         // stop when needed
-        if (targetRatio <= currentRatio(currentVideoPt))
+        if (videoPlayer.time > 360)
         {
-            //videoPlayer.playbackSpeed = 0;
+            playerCamera.transform.rotation = Quaternion.Euler(0, 70, 0);
         }
-        
-        //Debug.Log(currentRatio(currentVideoPt));
     }
     
 
@@ -112,7 +113,7 @@ public class VideoController : MonoBehaviour
             // Start video
             startScene.SetActive(false);
             videoPlayer.Play();
-            headBlocker.BlockTheView();
+            //headBlocker.BlockTheView();
         }
 
         if (num3 == -5 && num4 == -5)
@@ -125,6 +126,8 @@ public class VideoController : MonoBehaviour
             VideoPlayerObject.SetActive(false);
             fireFigher.SetActive(true);
             StartCoroutine(PlayFireFighter(fireFighterPlayer));
+            rotationBeforeFirefighter = playerCamera.transform.rotation;
+            playerCamera.transform.rotation = Quaternion.Euler(0, -6f, 0);
         }
         if (num3 == -6 && num4 == -6)
         {
@@ -135,6 +138,7 @@ public class VideoController : MonoBehaviour
             VideoPlayerObject.SetActive(true);
             videoPlayer.frame = currentFrame + 1;
             videoPlayer.Play();
+            playerCamera.transform.rotation = rotationBeforeFirefighter;
         }
         if (num3 == -7 && num4 == -7)
         {
