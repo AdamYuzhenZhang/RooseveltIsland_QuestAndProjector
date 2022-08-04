@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.UI;
@@ -8,6 +9,8 @@ public class VideoController : MonoBehaviour
     public MQTTReceiver _eventSender;
     //public string tagOfTheMQTTReceiver = "GameController";
     public VideoPlayer videoPlayer;
+    public VideoPlayer fireFighterPlayer;
+    public GameObject fireFigher;
     public GameObject playerCamera;
 
     public int[] starts = new int[]{0, 49, 64, 135, 153, 162};
@@ -34,6 +37,8 @@ public class VideoController : MonoBehaviour
 
     public HeadBlocker headBlocker;
     public GameObject startScene;
+    public GameObject VideoPlayerObject;
+    private long currentFrame;
     
     // Start is called before the first frame update
     void Start()
@@ -106,16 +111,40 @@ public class VideoController : MonoBehaviour
         {
             // Start video
             startScene.SetActive(false);
-            headBlocker.StopBlocking();
+            videoPlayer.Play();
+            headBlocker.BlockTheView();
         }
 
         if (num3 == -5 && num4 == -5)
         {
             // Firefighter start
+            // headBlocker.BlockTheView();
+            // should block the view first then invoke the video scene
+            headBlocker.StopBlocking();
+            currentFrame = videoPlayer.frame;
+            VideoPlayerObject.SetActive(false);
+            fireFigher.SetActive(true);
+            StartCoroutine(PlayFireFighter(fireFighterPlayer));
         }
         if (num3 == -6 && num4 == -6)
         {
             // Firefighter end
+            headBlocker.StopBlocking();
+            fireFigher.SetActive(false);
+            fireFighterPlayer.frame = 0;
+            VideoPlayerObject.SetActive(true);
+            videoPlayer.frame = currentFrame + 1;
+            videoPlayer.Play();
+        }
+        if (num3 == -7 && num4 == -7)
+        {
+            // block the view 
+            headBlocker.ManuallyBlocked();
+        }
+        if (num3 == -8 && num4 == -8)
+        {
+            // unblock the view
+            headBlocker.StopBlocking();
         }
 
         // set speed
@@ -147,5 +176,11 @@ public class VideoController : MonoBehaviour
         float currentVideoTime = (float)videoPlayer.time;
         float ratio = (currentVideoTime - starts[currentPt]) / durations[currentPt];
         return Mathf.Clamp(ratio, 0, 1);
+    }
+
+    IEnumerator PlayFireFighter(VideoPlayer videoPlayer)
+    {
+        yield return new WaitForSeconds(0.5f);
+        videoPlayer.Play();
     }
 }
