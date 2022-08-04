@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ca55c104-120f-417b-b0d9-9b75827dfecf" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/HeadBlocker/M_HeadBlocker.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HeadBlocker/M_HeadBlocker.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.RooseveltIsland_QuestAndProjector/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RooseveltIsland_QuestAndProjector/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/QuestScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/QuestScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/HeadBlocker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/HeadBlocker.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/VideoController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/VideoController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +13,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.xr.interaction.toolkit@2.0.2/Runtime/Interaction/XRInteractionManager.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="2CX7zSANgUzaS9qkORYsokur3gL" />
   <component name="ProjectViewState">
@@ -59,7 +59,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1658937347837</updated>
-      <workItem from="1658937371272" duration="4078000" />
+      <workItem from="1658937371272" duration="4818000" />
+      <workItem from="1659391340760" duration="5699000" />
     </task>
     <servers />
   </component>
